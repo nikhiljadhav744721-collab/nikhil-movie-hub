@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIKHIL MOVIE HUB</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#100d14;color:#fff7fb;font-family:Arial,sans-serif}
+header{background:#241329;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-weight:900;font-size:20px} .tag{font-size:12px;color:#f6dce7}
+button{border:0;border-radius:10px;padding:12px 16px;background:#e11d48;color:white;font-weight:bold;cursor:pointer}
+main{max-width:1050px;margin:auto;padding:20px}
+.hero{padding:35px 24px;border-radius:20px;background:linear-gradient(120deg,#32132b,#a92a45)}
+h1{font-size:clamp(32px,7vw,56px);margin:12px 0}.hero p{line-height:1.6}
+.toolbar,.upload-row{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+input,select{padding:12px;border-radius:10px;border:1px solid #604357;background:#211923;color:white;font-size:15px}
+#search{flex:1;min-width:180px}select{min-width:140px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+.card{background:#1b151e;border:1px solid #493744;border-radius:15px;overflow:hidden}
+video{width:100%;aspect-ratio:16/9;background:#302034}
+.cardbody{padding:13px}.title{font-weight:bold;margin-bottom:8px}.meta{font-size:12px;color:#c4b5c0;margin-bottom:12px}
+.panel{margin-top:28px;padding:20px;border:1px solid #493744;background:#1b151e;border-radius:16px}
+.empty{text-align:center;padding:35px;border:1px dashed #604357;border-radius:14px;color:#c4b5c0}
+.note{font-size:12px;line-height:1.6;color:#c4b5c0;margin-top:12px}
+footer{text-align:center;padding:25px;color:#c4b5c0}
+@media(max-width:520px){main{padding:14px}header{padding:13px}.brand{font-size:16px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">▶ NIKHIL MOVIE HUB</div><div class="tag">मनोरंजन • कॉमेडी • धमाल</div></div><a href="#upload"><button>＋ Upload</button></a></header>
+<main>
+<section class="hero"><div>तुमचा मनोरंजनाचा अड्डा</div><h1>हसा, पाहा आणि मनोरंजनाचा आनंद घ्या!</h1><p>कॉमेडी आणि मनोरंजनाचे व्हिडिओ एका ठिकाणी. नवीन व्हिडिओ शोधा आणि उपलब्ध व्हिडिओ डाउनलोड करा.</p><a href="#videos"><button>व्हिडिओ पाहा ↓</button></a></section>
+<section id="videos">
+<h2>🎬 व्हिडिओ संग्रह</h2><div id="count" class="note">0 व्हिडिओ</div>
+<div class="toolbar"><input id="search" placeholder="🔍 व्हिडिओ शोधा..."><select id="filter"><option value="all">सर्व व्हिडिओ</option><option>कॉमेडी</option><option>मनोरंजन</option></select></div>
+<div id="grid" class="grid"></div><div id="empty" class="empty">🎥<br>अजून व्हिडिओ अपलोड केलेले नाहीत.</div>
+</section>
+<section id="upload" class="panel"><h2>⬆️ नवीन व्हिडिओ अपलोड करा</h2><p>तुमच्या मोबाईलमधून व्हिडिओ निवडा आणि त्याला नाव द्या.</p>
+<div class="upload-row"><input id="name" placeholder="व्हिडिओचे नाव"><select id="kind"><option>कॉमेडी</option><option>मनोरंजन</option></select><input id="file" type="file" accept="video/*"><button id="add">अपलोड करा</button></div>
+<div id="info" class="note">MP4, MOV इत्यादी व्हिडिओ फाइल निवडा.</div>
+<p class="note"><b>महत्त्वाचे:</b> ही डेमो वेबसाइट आहे. येथे अपलोड केलेले व्हिडिओ फक्त चालू पेज/सत्रात दिसतात; रीफ्रेश केल्यावर कायम राहत नाहीत आणि इतर अभ्यागतांना दिसत नाहीत. सर्वांसाठी कायम व्हिडिओ साठवण्यासाठी सुरक्षित सर्व्हर व स्टोरेज जोडावे लागेल. स्वतःचे किंवा परवानगी असलेले व्हिडिओच अपलोड करा.</p>
+</section>
+</main><footer>© 2026 NIKHIL MOVIE HUB · मनोरंजनाचा आनंद घ्या!</footer>
+<script>
+const videos=[];const grid=document.getElementById('grid'),empty=document.getElementById('empty');
+function render(){const term=document.getElementById('search').value.toLowerCase(),cat=document.getElementById('filter').value;grid.innerHTML='';const shown=videos.filter(v=>v.name.toLowerCase().includes(term)&&(cat==='all'||v.cat===cat));document.getElementById('count').textContent=videos.length+' व्हिडिओ';empty.style.display=shown.length?'none':'block';if(!shown.length&&videos.length)empty.textContent='या शोधासाठी व्हिडिओ सापडला नाही.';else if(!videos.length)empty.innerHTML='🎥<br>अजून व्हिडिओ अपलोड केलेले नाहीत.';shown.forEach(v=>{const card=document.createElement('article');card.className='card';const player=document.createElement('video');player.src=v.url;player.controls=true;player.playsInline=true;const body=document.createElement('div');body.className='cardbody';const title=document.createElement('div');title.className='title';title.textContent=v.name;const meta=document.createElement('div');meta.className='meta';meta.textContent=v.cat;const down=document.createElement('button');down.textContent='⬇ Download';down.onclick=()=>{const a=document.createElement('a');a.href=v.url;a.download=v.file.name;a.click()};body.append(title,meta,down);card.append(player,body);grid.append(card)})}
+document.getElementById('add').onclick=()=>{const file=document.getElementById('file').files[0],name=document.getElementById('name').value.trim();if(!file||!file.type.startsWith('video/')){alert('कृपया व्हिडिओ फाइल निवडा.');return}if(!name){alert('व्हिडिओचे नाव लिहा.');return}videos.unshift({name,cat:document.getElementById('kind').value,file,url:URL.createObjectURL(file)});document.getElementById('name').value='';document.getElementById('file').value='';document.getElementById('info').textContent='व्हिडिओ निवडला गेला.';render();alert('व्हिडिओ या preview मध्ये जोडला गेला!')};
+document.getElementById('search').oninput=render;document.getElementById('filter').onchange=render;render();
+</script>
+</body></html>
